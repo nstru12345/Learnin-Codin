@@ -1,0 +1,42 @@
+using System;
+namespace PlayersGuide
+{
+    public class IdeaGen
+    {
+        static void Main()
+        {
+            Console.WriteLine("What is their X coordinate?");
+            int x = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("What about their Y coordinate?");
+            int y = Convert.ToInt32(Console.ReadLine());
+            Console.Write("The enemy is ");
+            if (y > 0)
+            {
+                if (x < 0)
+                    Console.Write("northwest of here!");
+                else if (x == 0)
+                    Console.Write("north of here!");
+                else if (x > 0)
+                    Console.Write("northeast of here!");
+            }
+            else if (y == 0)
+            {
+                if (x < 0)
+                    Console.Write("west of here!");
+                else if (x == 0)
+                    Console.Write("here!");
+                else if (x > 0)
+                    Console.Write("east of here!");
+            }
+            else if (y < 0)
+            {
+                if (x < 0)
+                    Console.Write("southwest of here!");
+                else if (x == 0)
+                    Console.Write("south of here!");
+                else if (x > 0)
+                    Console.Write("southeast of here!");
+            }
+        }
+    }
+}
