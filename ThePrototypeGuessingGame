@@ -7,6 +7,7 @@ namespace PlayersGuide
         {
             Console.WriteLine("User 1, enter a number between 1 & 100");
             int numberToGuess = Convert.ToInt32(Console.ReadLine());
+            Console.Clear();
             int guess = -1;
             while (guess != numberToGuess)
             {
