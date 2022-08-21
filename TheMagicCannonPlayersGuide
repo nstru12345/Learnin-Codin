@@ -1,0 +1,25 @@
+using System;
+namespace PlayersGuide
+{
+    public class IdeaGen
+    {
+        static void Main()
+        {
+            for (int x = 1; x <= 100; x++)
+            {
+                if (x % 3 == 0)
+                {
+                    Console.WriteLine($"{x}. Fire");
+                }
+                else if (x % 5 == 0)
+                {
+                    Console.WriteLine($"{x}. Electric");
+                }
+                else
+                {
+                    Console.WriteLine($"{x}. Normal");
+                }
+            }
+        }
+    }
+}
