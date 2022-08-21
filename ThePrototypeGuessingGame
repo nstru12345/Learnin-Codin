@@ -1,0 +1,31 @@
+using System;
+namespace PlayersGuide
+{
+    public class IdeaGen
+    {
+        static void Main()
+        {
+            Console.WriteLine("User 1, enter a number between 1 & 100");
+            int numberToGuess = Convert.ToInt32(Console.ReadLine());
+            int guess = -1;
+            while (guess != numberToGuess)
+            {
+                Console.WriteLine("User 2, guess the number");
+                guess = Convert.ToInt32(Console.ReadLine());
+                if (numberToGuess < guess)
+                {
+                    Console.WriteLine("You guessed too high");
+                }
+                else if (numberToGuess > guess)
+                {
+                    Console.WriteLine("You guessed too low");
+                }
+                else if (numberToGuess == guess)
+                {
+                    Console.WriteLine("You guessed right!");
+                    break;
+                }
+            }
+        }
+    }
+}
