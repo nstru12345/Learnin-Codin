@@ -105,19 +105,6 @@ namespace PlayersGuide
                     }
                 }
             }
-            void DisplayWinOrLose(bool won)
-            {
-                if (won)
-                {
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine("The Manticore has been destroyed! The city of Consolas has been saved!");
-                }
-                else
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("The city has been destroyed. The Manticore and the Uncoded One have won.");
-                }
-            }
         }
     }
 }
