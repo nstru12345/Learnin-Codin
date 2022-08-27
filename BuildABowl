@@ -1,0 +1,58 @@
+using System;
+namespace PlayersGuide
+{
+    public enum FoodType { soup, stew, gumbo }
+    public enum Ingredient { mushrooms, chicken, carrots, potatoes }
+    public enum Seasoning { spicy, salty, sweet }
+
+    class MyClass
+    {
+        static FoodType currentType = FoodType.soup;
+        static Ingredient currentIngredient = Ingredient.mushrooms;
+        static Seasoning currentSeasoning = Seasoning.salty;
+
+        public static void Main()
+        {
+            Console.WriteLine("Welcome to Big Jim's Soup Shack! Home of the build-a-bowl, what can I get ya today?");
+            GetSoup();
+            Console.Write($"One {currentSeasoning} {currentIngredient} {currentType} coming right up!");
+        }
+
+        static (FoodType, Ingredient, Seasoning) GetSoup()
+        {
+            FoodType type = GetFoodType();
+            Ingredient ingredient = GetIngredient();
+            Seasoning seasoning = GetSeasoning();
+            return (type, ingredient, seasoning);
+        }
+
+        static FoodType GetFoodType()
+        {
+            Console.WriteLine("We have soup, stew, or gumbo");
+            var input = Console.ReadLine();
+            if (input == "soup") currentType = FoodType.soup;
+            if (input == "stew") currentType = FoodType.stew;
+            if (input == "gumbo") currentType = FoodType.gumbo;
+            return currentType;
+        }
+        static Ingredient GetIngredient()
+        {
+            Console.WriteLine("For ingredients we have mushrooms, chicken, carrots, or potatoes");
+            var input = Console.ReadLine();
+            if (input == "mushrooms") currentIngredient = Ingredient.mushrooms;
+            if (input == "chicken") currentIngredient = Ingredient.chicken;
+            if (input == "carrots") currentIngredient = Ingredient.carrots;
+            if (input == "potatoes") currentIngredient = Ingredient.potatoes;
+            return currentIngredient;
+        }
+        static Seasoning GetSeasoning()
+        {
+            Console.WriteLine("We have spicy, salty, and sweet seasonings");
+            var input = Console.ReadLine();
+            if (input == "spicy") currentSeasoning = Seasoning.spicy;
+            if (input == "salty") currentSeasoning = Seasoning.salty;
+            if (input == "sweet") currentSeasoning = Seasoning.sweet;
+            return currentSeasoning;
+        }
+    }
+}
