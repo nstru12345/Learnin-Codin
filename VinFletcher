@@ -1,0 +1,89 @@
+using System;
+
+Arrow arrow = GetArrow();
+Console.WriteLine($"Your arrow will cost {arrow.GetCost()} gold.");
+Console.ReadKey();
+
+Arrow GetArrow()
+{
+    Arrowhead arrowhead = GetArrowhead();
+    Fletching fletching = GetFletching();
+    float length = GetLength();
+    return new Arrow(arrowhead, fletching, length);
+}
+
+Fletching GetFletching()
+{
+    Console.WriteLine("What fletching would you like? Enter 1-3");
+    Console.WriteLine("1. Plastic (10 gold)");
+    Console.WriteLine("2. Turkey Feather (5 gold)");
+    Console.WriteLine("3. Goose Feather (3 gold)");
+    int input = Convert.ToInt32(Console.ReadLine());
+        return input switch
+    {
+        1 => Fletching.plastic,
+        2 => Fletching.turkeyfeathers,
+        3 => Fletching.goosefeathers
+    };
+}
+
+Arrowhead GetArrowhead()
+{
+    Console.WriteLine("What arrowhead would you like? Enter 1-3");
+    Console.WriteLine("1. steel (10 gold)");
+    Console.WriteLine("2. wood (3 gold)");
+    Console.WriteLine("3. obsidian (5 gold)");
+    int input = Convert.ToInt32(Console.ReadLine());
+
+    return input switch
+    {
+        1 => Arrowhead.steel,
+        2 => Arrowhead.wood,
+        3 => Arrowhead.obsidian
+    };
+}
+
+float GetLength()
+{
+    float length = 0;
+    while (length < 60 || length > 100)
+    {
+        Console.WriteLine("Enter a length between 60 and 100");
+        length = Convert.ToInt32(Console.ReadLine());
+    }
+    return length;
+
+}
+
+class Arrow
+{
+    public Arrowhead _arrowhead;
+    public Fletching _fletching;
+    public float _length;
+
+    public Arrow(Arrowhead arrowhead, Fletching fletching, float length)
+    {
+        _arrowhead = arrowhead;
+        _fletching = fletching;
+        _length = length;
+    }
+    public float GetCost()
+    {
+        float arrowheadCost = _arrowhead switch
+        {
+            Arrowhead.steel => 10,
+            Arrowhead.wood => 3,
+            Arrowhead.obsidian => 5
+        };
+        float fletchingCost = _fletching switch
+        {
+            Fletching.plastic => 10,
+            Fletching.turkeyfeathers => 5,
+            Fletching.goosefeathers => 3
+        };
+        float lengthCost = 0.05f * _length;
+        return arrowheadCost + fletchingCost + lengthCost;
+    }
+}
+enum Arrowhead { steel, wood, obsidian }
+enum Fletching { plastic, turkeyfeathers, goosefeathers }
