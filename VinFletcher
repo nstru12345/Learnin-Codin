@@ -6,13 +6,13 @@ Console.ReadKey();
 
 Arrow GetArrow()
 {
-    Arrowhead arrowhead = GetArrowhead();
-    Fletching fletching = GetFletching();
+    Arrowhead arrowhead = GetArrowheadType();
+    Fletching fletching = GetFletchingType();
     float length = GetLength();
     return new Arrow(arrowhead, fletching, length);
 }
 
-Fletching GetFletching()
+Fletching GetFletchingType()
 {
     Console.WriteLine("What fletching would you like? Enter 1-3");
     Console.WriteLine("1. Plastic (10 gold)");
@@ -27,7 +27,7 @@ Fletching GetFletching()
     };
 }
 
-Arrowhead GetArrowhead()
+Arrowhead GetArrowheadType()
 {
     Console.WriteLine("What arrowhead would you like? Enter 1-3");
     Console.WriteLine("1. steel (10 gold)");
@@ -57,9 +57,13 @@ float GetLength()
 
 class Arrow
 {
-    public Arrowhead _arrowhead;
-    public Fletching _fletching;
-    public float _length;
+    private Arrowhead _arrowhead;
+    private Fletching _fletching;
+    private float _length;
+
+    public Arrowhead GetArrowhead() => _arrowhead;
+    public Fletching GetFletching() => _fletching;
+    public float GetLength() => _length;
 
     public Arrow(Arrowhead arrowhead, Fletching fletching, float length)
     {
@@ -67,6 +71,7 @@ class Arrow
         _fletching = fletching;
         _length = length;
     }
+
     public float GetCost()
     {
         float arrowheadCost = _arrowhead switch
