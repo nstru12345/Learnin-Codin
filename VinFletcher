@@ -1,12 +1,29 @@
 using System;
 
-Arrow arrow = GetArrow();
-Console.WriteLine($"Your arrow will cost {arrow.GetCost()} gold.");
+Arrow arrow = AskArrow();
+Console.WriteLine($"Your arrow will cost {arrow.Cost} gold.");
 Console.ReadKey();
 
-Arrow GetArrow()
+Arrow AskArrow()
 {
-    Arrowhead arrowhead = GetArrowheadType();
+    Console.WriteLine("What kind of arrow would you like?");
+    Console.WriteLine("1. Elite Arrow");
+    Console.WriteLine("2. Beginner Arrow");
+    Console.WriteLine("3. Marksmen Arrow");
+    Console.WriteLine("4. Custom Arrow");
+    int input = Convert.ToInt32(Console.ReadLine());
+    return arrow = input switch
+    {
+        1 => Arrow.CreateEliteArrow(),
+        2 => Arrow.CreateBeginnerArrow(),
+        3 => Arrow.CreateMarksmenArrow(),
+        4 => GetArrow(),
+        _ => GetArrow()
+    };
+}
+
+Arrow GetArrow()
+{   Arrowhead arrowhead = GetArrowheadType();
     Fletching fletching = GetFletchingType();
     float length = GetLength();
     return new Arrow(arrowhead, fletching, length);
@@ -57,37 +74,59 @@ float GetLength()
 
 class Arrow
 {
-    private Arrowhead _arrowhead;
-    private Fletching _fletching;
-    private float _length;
+    private Arrowhead Arrowhead { get; } = 0;
+    private Fletching Fletching { get; } = 0;
+    private float Length { get; } = 0;
 
-    public Arrowhead GetArrowhead() => _arrowhead;
-    public Fletching GetFletching() => _fletching;
-    public float GetLength() => _length;
+    public Arrowhead GetArrowhead() => Arrowhead;
+    public Fletching GetFletching() => Fletching;
+    public float GetLength() => Length;
 
     public Arrow(Arrowhead arrowhead, Fletching fletching, float length)
     {
-        _arrowhead = arrowhead;
-        _fletching = fletching;
-        _length = length;
+        Arrowhead = arrowhead;
+        Fletching = fletching;
+        Length = length;
     }
 
-    public float GetCost()
+    public static Arrow CreateEliteArrow()
     {
-        float arrowheadCost = _arrowhead switch
+        Arrow EliteArrow = new Arrow(Arrowhead.steel, Fletching.plastic, 95);
+        return EliteArrow;
+    }
+
+    public static Arrow CreateBeginnerArrow()
+    {
+        Arrow BeginnerArrow = new Arrow(Arrowhead.wood, Fletching.goosefeathers, 75);
+        return BeginnerArrow;
+    }
+
+    public static Arrow CreateMarksmenArrow()
+    {
+        Arrow MarksmenArrow = new Arrow(Arrowhead.steel, Fletching.goosefeathers, 65);
+        return MarksmenArrow;
+    }
+
+    public float Cost
+    {
+      get
         {
-            Arrowhead.steel => 10,
-            Arrowhead.wood => 3,
-            Arrowhead.obsidian => 5
-        };
-        float fletchingCost = _fletching switch
-        {
-            Fletching.plastic => 10,
-            Fletching.turkeyfeathers => 5,
-            Fletching.goosefeathers => 3
-        };
-        float lengthCost = 0.05f * _length;
-        return arrowheadCost + fletchingCost + lengthCost;
+            float arrowheadCost = Arrowhead switch
+            {
+                Arrowhead.steel => 10,
+                Arrowhead.wood => 3,
+                Arrowhead.obsidian => 5
+            };
+            float fletchingCost = Fletching switch
+            {
+                Fletching.plastic => 10,
+                Fletching.turkeyfeathers => 5,
+                Fletching.goosefeathers => 3
+            };
+
+            float lengthCost = 0.05f * Length;
+            return arrowheadCost + fletchingCost + lengthCost;
+        }
     }
 }
 enum Arrowhead { steel, wood, obsidian }
