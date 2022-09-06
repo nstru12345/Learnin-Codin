@@ -1,0 +1,22 @@
+using System;
+Color aColor = new Color(100, 1, 100);
+Console.WriteLine($"Red: {aColor.red}, Green: {aColor.green}, Blue: {aColor.blue}");
+Console.WriteLine($"Red: {Color.Red.red}, Blue: {Color.Red.blue}, Green: {Color.Green.green}");
+Console.ReadKey();
+
+public class Color
+{
+    public int red { get; }
+    public int green { get; }
+    public int blue { get; }
+
+    public Color(int red, int green, int blue)
+    {
+        this.red = red;
+        this.green = green;
+        this.blue = blue;
+    }
+    public static Color Red { get; } = new Color(255, 0, 0);
+    public static Color Green { get; } = new Color(0, 255, 0);
+    public static Color Blue { get; } = new Color(0, 0, 255);
+}
