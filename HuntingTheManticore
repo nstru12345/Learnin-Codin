@@ -1,110 +1,162 @@
 using System;
-namespace PlayersGuide
+using System.Text;
+HuntingTheManticoreGame game = CreateGame();
+game.PlayGame();
+//methods
+
+HuntingTheManticoreGame CreateGame()
 {
-    public class IdeaGen
+    City city = new City(15);
+    Location location = new Location();
+    int ManticoreLocation = location.SetLocation();
+    Manticore manticore = new Manticore(10, ManticoreLocation);
+
+    return new HuntingTheManticoreGame(0, manticore, city);
+}
+
+// classes 
+
+public class City
+{
+    public City(int health)
     {
+        Health = health;
+    }
 
-        static void Main()
+    public int Health { get; set; }
+
+}
+public class Manticore
+{
+    public Manticore(int health, int location)
+    {
+        Health = health;
+        Location = location;
+    }
+
+    public int Health { get; set;}
+    public int Location { get; set; }
+}
+
+public class Location
+{
+    public int ManticoreLocation { get; set; }
+
+    public int SetLocation()
+    {
+        Random random = new Random();
+        ManticoreLocation = random.Next(0, 100);
+        return ManticoreLocation;
+    }
+
+}
+public class HuntingTheManticoreGame
+{
+    public HuntingTheManticoreGame(int round, Manticore manticore, City city)
+    {
+        Round = round;
+        Manticore = manticore;
+        City = city;
+    }
+
+    int Round { get; set; }
+    Manticore Manticore { get; }
+    City City { get; }
+    public void PlayGame()
+    {
+        while (City.Health > 0 && Manticore.Health > 0)
         {
-            int cityHealth = 15;
-            int round = 1;
-            int manticoreHealth = 10;
-            Console.WriteLine("Player 1, enter the manticore's location");
-            int manticore = AskForNumberInRange("User 1, enter a number between 1 and 100: ", 0, 100);
-            Console.Clear();
-            while (cityHealth > 0 && manticoreHealth > 0)
-            {
-                Console.WriteLine($"City: {cityHealth}/15");
-                Console.WriteLine($"Round: {round}");
-                Console.WriteLine($"Manticore Health: {manticoreHealth}/10");
-                Console.WriteLine($"Expected damage: {DamageManticore()}");
-                Console.Write($"Set your target: ");
-                int target = AskForNumberInRange("Where shall ye shoot?", 0, 100);
+            Console.WriteLine($"City: {City.Health}/15");
+            Console.WriteLine($"Round: {Round}");
+            Console.WriteLine($"Manticore Health: {Manticore.Health}/10");
+            Console.WriteLine($"Expected damage: {DamageManticore()}");
+            Console.Write($"Set your target: ");
+            int target = AskForNumberInRange("Where shall ye shoot?", 0, 100);
 
-                if (target == manticore)
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    manticoreHealth -= DamageManticore();
-                    DamageCity();
-                    round += 1;
-                }
-                else if (target > manticore)
-                {
-                    Console.WriteLine("Too high!");
-                    DamageCity();
-                    round += 1;
-                }
-                else if (target < manticore)
-                {
-                    Console.WriteLine("Too low!");
-                    DamageCity();
-                    round += 1;
-                }
-                Console.WriteLine("-----------------");
+            if (target == Manticore.Location)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Manticore.Health -= DamageManticore();
+                DamageCity();
+                Round += 1;
             }
-
-            //methods
-            int AskForNumber(string text)
+            else if (target > Manticore.Location)
             {
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.Write(text + " ");
-                int target = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine("Too high!");
+                DamageCity();
+                Round += 1;
+            }
+            else if (target < Manticore.Location)
+            {
+                Console.WriteLine("Too low!");
+                DamageCity();
+                Round += 1;
+            }
+            Console.WriteLine("-----------------");
+        }
+        if (City.Health == 0) Console.WriteLine("You've lost!");
+        else if (Manticore.Health == 0) Console.WriteLine("You've won! the day is saved!");
+        Console.ReadLine();
+    }
+    int AskForNumber(string text)
+    {
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        Console.Write(text + " ");
+        int target = Convert.ToInt32(Console.ReadLine());
+        return target;
+    }
+
+    int AskForNumberInRange(string text, int min, int max)
+    {
+        while (true)
+        {
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            int target = AskForNumber(text);
+            if (target >= min && target <= max)
                 return target;
-            }
+        }
+    }
 
-            int AskForNumberInRange(string text, int min, int max)
+    public int DamageManticore()
+    {
+        while (true)
+        {
+            if (Round % 3 == 0 && Round % 5 == 0)
             {
-                while (true)
-                {
-                    Console.ForegroundColor = ConsoleColor.Magenta;
-                    int target = AskForNumber(text);
-                    if (target >= min && target <= max)
-                        return target;
-                }
+                return 10;
             }
-
-            int DamageManticore()
+            else if (Round % 3 != 0 && Round % 5 != 0)
             {
-                while (true)
-                {
-                    if (round % 3 == 0 && round % 5 == 0)
-                    {
-                        return 10;
-                    }
-                    else if (round % 3 != 0 && round % 5 != 0)
-                    {
-                        return 1;
-                    }
-                    else if (round % 3 == 0)
-                    {
-                        return 3;
-                    }
-                    else if (round % 5 == 0)
-                    {
-                        return 5;
-                    }
-                    else
-                    {
-                        return 1;
-                    }
-                }
+                return 1;
             }
-
-            void DamageCity()
+            else if (Round % 3 == 0)
             {
-                while (true)
-                {
-                    if (manticoreHealth > 0)
-                    {
-                        cityHealth -= 1;
-                        return;
-                    }
-                    else if (manticoreHealth == 0)
-                    {
-                        return;
-                    }
-                }
+                return 3;
+            }
+            else if (Round % 5 == 0)
+            {
+                return 5;
+            }
+            else
+            {
+                return 1;
             }
         }
     }
+    public void DamageCity()
+    {
+        while (true)
+        {
+            if (Manticore.Health > 0)
+            {
+                City.Health -= 1;
+                return;
+            }
+            else if (Manticore.Health == 0)
+            {
+                return;
+            }
+        }
+    }
+
 }
